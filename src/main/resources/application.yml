@@ -1,9 +1,9 @@
 # Configuración de la base de datos
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/metroCard
-    username: root
-    password: root##root
+    url: jdbc:mysql://${HOST}/${METRO_DATABASE}
+    username: ${USER_DATABASE}
+    password: ${PASS_DATABASE}
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
