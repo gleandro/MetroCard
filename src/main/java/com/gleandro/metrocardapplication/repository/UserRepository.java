@@ -1,10 +1,13 @@
 package com.gleandro.metrocardapplication.repository;
 
-import com.gleandro.metrocardapplication.entity.User;
+import com.gleandro.metrocardapplication.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
 
+@Repository
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
+
+    Optional<UserEntity> getByDni(String dni);
 }

@@ -7,7 +7,8 @@ import java.io.Serializable;
 
 @Data
 @Entity
-public class User implements Serializable {
+@Table(name = "user")
+public class UserEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -25,7 +26,7 @@ public class User implements Serializable {
     private String email;
     @Column(length = 50, nullable = false)
     private String password;
-    @Column(length = 10, nullable = false, name = "date_of_birth")
+    @Column(length = 10, name = "date_of_birth")
     private String dateOfBirth;
     @Column(length = 8, nullable = false)
     private String dni;
