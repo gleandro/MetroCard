@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -34,9 +33,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public UserEntity getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User not found"));
+    public ApiResponse<UserEntity> getUserByCode(String code) {
+        Optional<UserEntity> userOptional = userRepository.getByUserCode(code);
+        return userOptional.isEmpty() ? buildResponse(false, Constants.ERROR, Constants.USER_NOT_FOUND, null)
+                : buildResponse(true, Constants.SUCCESS, Constants.USER_CREATED, userOptional.get());
     }
 
     public UserEntity updateUser(UserEntity userEntity) {

@@ -1,9 +1,14 @@
 package com.gleandro.metrocardapplication.entity;
 
+import com.gleandro.metrocardapplication.util.Constants;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,4 +35,11 @@ public class UserEntity implements Serializable {
     private String dateOfBirth;
     @Column(length = 8, nullable = false)
     private String dni;
+    @Column(length = 50, nullable = false)
+    private LocalDateTime createdDate = LocalDateTime.now(ZoneId.of(Constants.TIME_ZONE_DEFAULT));
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_code", referencedColumnName = "user_code")
+    private List<TransferEntity> transferEntity = new ArrayList<>();
+
 }

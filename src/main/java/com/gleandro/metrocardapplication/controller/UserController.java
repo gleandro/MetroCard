@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @CrossOrigin(origins = "*")
 public class UserController {
 
@@ -19,13 +19,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserEntity>> getAllUsers() {
-        List<UserEntity> userEntities = userService.getAllUsers();
-        return ResponseEntity.ok(userEntities);
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public UserEntity getUserById(@PathVariable("id") Long id) {
-        return userService.getUserById(id);
+    public ApiResponse<UserEntity> getUserByDni(@PathVariable("id") String id) {
+        return userService.getUserByDni(id);
     }
 
     @PostMapping
