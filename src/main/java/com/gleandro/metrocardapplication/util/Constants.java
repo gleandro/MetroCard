@@ -2,9 +2,15 @@ package com.gleandro.metrocardapplication.util;
 
 public class Constants {
 
+    private Constants() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final String SUCCESS = "200";
     public static final String ERROR = "400";
     public static final String USER_PREFIX = "USR";
+    public static final String TRANSFER_PREFIX = "TRF";
+    public static final String ACCOUNT_PREFIX = "ACC";
 
     public static final String USER_LIST_SUCCESS = "Lista de usuarios obtenida con exito";
     public static final String USER_LIST_EMPTY = "No hay usuarios registrados";

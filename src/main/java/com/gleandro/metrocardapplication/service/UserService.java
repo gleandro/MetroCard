@@ -4,7 +4,7 @@ import com.gleandro.metrocardapplication.entity.UserEntity;
 import com.gleandro.metrocardapplication.repository.UserRepository;
 import com.gleandro.metrocardapplication.util.ApiResponse;
 import com.gleandro.metrocardapplication.util.Constants;
-import com.gleandro.metrocardapplication.util.util;
+import com.gleandro.metrocardapplication.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ApiResponse<UserEntity> createUser(UserEntity user) {
-        user.setUserCode(Constants.USER_PREFIX + util.formatCodeNumber(userRepository.count()));
+    public ApiResponse<UserEntity> add(UserEntity user) {
+        user.setUserCode(Constants.USER_PREFIX + Util.formatCodeNumber(userRepository.count()));
         Optional<UserEntity> userOptional = userRepository.getByDni(user.getDni());
 
         if (userOptional.isPresent()) {

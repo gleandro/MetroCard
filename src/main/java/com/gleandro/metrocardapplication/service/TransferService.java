@@ -17,15 +17,15 @@ public class TransferService {
     @Autowired
     private UserService userService;
 
-    public ApiResponse<TransferEntity> createTransfer(TransferEntity obj) {
+    public ApiResponse<TransferEntity> add(TransferEntity obj) {
         ApiResponse<UserEntity> userEntity = userService.getUserByCode(obj.getUserCode());
 
-        if (!userEntity.getSuccess()) {
-            return buildResponse(false, Constants.ERROR, Constants.USER_DUPLICATED, null);
+        if (Boolean.FALSE.equals(userEntity.getSuccess())) {
+            return buildResponse(false, Constants.ERROR, Constants.USER_NOT_FOUND, null);
         }
 
-
-        return buildResponse(true, Constants.SUCCESS, Constants.USER_CREATED, obj);
+        TransferEntity transferEntity = transferRepository.save(obj);
+        return buildResponse(true, Constants.SUCCESS, Constants.USER_CREATED, transferEntity);
     }
 
     private ApiResponse<TransferEntity> buildResponse(boolean status, String code, String message, TransferEntity entity) {

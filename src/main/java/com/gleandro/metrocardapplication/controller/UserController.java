@@ -24,12 +24,12 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ApiResponse<UserEntity> getUserByDni(@PathVariable("id") String id) {
-        return userService.getUserByDni(id);
+        return userService.getUserByCode(id);
     }
 
     @PostMapping
-    public ApiResponse<UserEntity> createUser(@RequestBody UserEntity userEntity) {
-        return userService.createUser(userEntity);
+    public ApiResponse<UserEntity> add(@RequestBody UserEntity userEntity) {
+        return userService.add(userEntity);
     }
 
     @PutMapping()

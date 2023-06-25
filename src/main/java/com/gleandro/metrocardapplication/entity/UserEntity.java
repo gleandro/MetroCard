@@ -35,7 +35,7 @@ public class UserEntity implements Serializable {
     private String dateOfBirth;
     @Column(length = 8, nullable = false)
     private String dni;
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = false, name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now(ZoneId.of(Constants.TIME_ZONE_DEFAULT));
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

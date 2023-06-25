@@ -1,7 +1,6 @@
 package com.gleandro.metrocardapplication.controller;
 
 import com.gleandro.metrocardapplication.entity.TransferEntity;
-import com.gleandro.metrocardapplication.entity.UserEntity;
 import com.gleandro.metrocardapplication.service.TransferService;
 import com.gleandro.metrocardapplication.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,8 @@ public class TransferController {
     private TransferService transferService;
 
     @PostMapping
-    public ApiResponse<UserEntity> createTransfer(@RequestBody TransferEntity transferEntity) {
-        return transferService.createTransfer(transferEntity);
+    public ApiResponse<TransferEntity> createTransfer(@RequestBody TransferEntity transferEntity) {
+        return transferService.add(transferEntity);
     }
 
 
