@@ -1,5 +1,6 @@
 package com.gleandro.metrocardapplication.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gleandro.metrocardapplication.util.Constants;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -27,12 +28,11 @@ public class RechargeAccountEntity implements Serializable {
     @Column(length = 8, nullable = false, name = "user_code")
     private String userCode;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private String accountNumber;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "account_code", referencedColumnName = "account_code", insertable = false, updatable = false)
     private AccountEntity accountEntity;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_code", referencedColumnName = "user_code", insertable = false, updatable = false)
-    private UserEntity userEntity;
 
 }

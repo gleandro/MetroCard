@@ -36,7 +36,7 @@ public class UserService {
     public ApiResponse<UserEntity> getUserByCode(String code) {
         Optional<UserEntity> userOptional = userRepository.getByUserCode(code);
         return userOptional.isEmpty() ? buildResponse(false, Constants.ERROR, Constants.USER_NOT_FOUND, null)
-                : buildResponse(true, Constants.SUCCESS, Constants.USER_CREATED, userOptional.get());
+                : buildResponse(true, Constants.SUCCESS, "", userOptional.get());
     }
 
     public UserEntity updateUser(UserEntity userEntity) {

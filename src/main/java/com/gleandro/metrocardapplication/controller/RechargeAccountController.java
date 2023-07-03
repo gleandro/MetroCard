@@ -16,8 +16,8 @@ public class RechargeAccountController {
     @Autowired
     private RechargeAccountService rechargeAccountService;
 
-    @GetMapping("{userCode}")
-    public List<RechargeAccountEntity> getRechargeAccounts(@RequestParam(required = false) String accountCode, @PathVariable String userCode) {
+    @GetMapping()
+    public List<RechargeAccountEntity> getRechargeAccounts(@RequestParam(required = false) String accountCode, @RequestParam(required = false) String userCode) {
         return rechargeAccountService.getRechargeAccounts(accountCode, userCode);
     }
 

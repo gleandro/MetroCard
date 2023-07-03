@@ -16,12 +16,12 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public List<AccountEntity> getAccounts() {
-        return accountRepository.findAll();
+    public List<AccountEntity> getAccounts(String userCode) {
+        return accountRepository.findByUserCode(userCode);
     }
 
     public ApiResponse<AccountEntity> getAccountByCode(String accountCode) {
-        return buildResponse(true, Constants.SUCCESS, Constants.USER_CREATED, accountRepository.getByAccountCode(accountCode).get());
+        return buildResponse(true, Constants.SUCCESS, "", accountRepository.getByAccountCode(accountCode).get());
     }
 
     public ApiResponse<AccountEntity> add(String userCode) {
@@ -29,17 +29,17 @@ public class AccountService {
         AccountEntity obj = new AccountEntity();
         obj.setAccountCode(Constants.ACCOUNT_PREFIX + Util.formatCodeNumber(accountRepository.count()));
         obj.setAccountNumber(Util.generateAccountNumber());
-        obj.setAccountDefault(accountRepository.findByUserCode(userCode).isEmpty());
+        obj.setAccountDefault(this.getAccounts(userCode).isEmpty());
         obj.setUserCode(userCode);
         obj.setBalance(0.00);
 
         AccountEntity transferEntity = accountRepository.save(obj);
-        return buildResponse(true, Constants.SUCCESS, Constants.USER_CREATED, transferEntity);
+        return buildResponse(true, Constants.SUCCESS, Constants.ACCOUNT_CREATED, transferEntity);
     }
 
     public ApiResponse<AccountEntity> update(AccountEntity obj) {
         AccountEntity transferEntity = accountRepository.save(obj);
-        return buildResponse(true, Constants.SUCCESS, Constants.USER_CREATED, transferEntity);
+        return buildResponse(true, Constants.SUCCESS, Constants.ACCOUNT_UPDATE, transferEntity);
     }
 
     private ApiResponse<AccountEntity> buildResponse(boolean status, String code, String message, AccountEntity entity) {

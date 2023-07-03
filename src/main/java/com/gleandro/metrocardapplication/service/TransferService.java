@@ -25,7 +25,7 @@ public class TransferService {
         }
 
         TransferEntity transferEntity = transferRepository.save(obj);
-        return buildResponse(true, Constants.SUCCESS, Constants.USER_CREATED, transferEntity);
+        return buildResponse(true, Constants.SUCCESS, Constants.TRANSFER_CREATED, transferEntity);
     }
 
     private ApiResponse<TransferEntity> buildResponse(boolean status, String code, String message, TransferEntity entity) {

@@ -39,7 +39,7 @@ public class UserEntity implements Serializable {
     private LocalDateTime createdDate = LocalDateTime.now(ZoneId.of(Constants.TIME_ZONE_DEFAULT));
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_code", referencedColumnName = "user_code")
-    private List<TransferEntity> transferEntity = new ArrayList<>();
+    @JoinColumn(name = "user_code", referencedColumnName = "user_code", insertable = false, updatable = false)
+    private List<AccountEntity> listAccountEntity = new ArrayList<>();
 
 }

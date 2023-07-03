@@ -1,5 +1,6 @@
 package com.gleandro.metrocardapplication.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gleandro.metrocardapplication.util.Constants;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -7,6 +8,8 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,8 +33,13 @@ public class AccountEntity implements Serializable {
     @Column(nullable = false)
     private Double balance;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_code", referencedColumnName = "user_code", insertable = false, updatable = false)
     private UserEntity userEntity;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_code", referencedColumnName = "account_code", insertable = false, updatable = false)
+    private List<RechargeAccountEntity> listRechargeAccount = new ArrayList<>();
 
 }

@@ -32,14 +32,5 @@ public class TransferEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_code", referencedColumnName = "user_code", insertable = false, updatable = false)
-    private UserEntity userEntity;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_code_from", referencedColumnName = "account_code", insertable = false, updatable = false)
-    private AccountEntity accountEntityFrom;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_code_to", referencedColumnName = "account_code", insertable = false, updatable = false)
-    private AccountEntity accountEntityTo;
-
+    private AccountEntity accountEntity;
 }

@@ -22,22 +22,26 @@ public class RechargeAccountService {
     private AccountService accountService;
 
     public List<RechargeAccountEntity> getRechargeAccounts(String accountCode, String userCode) {
-        return rechargeAccountRepository.findByUserCodeOrderByCreatedDateDesc(accountCode, userCode);
+        List<RechargeAccountEntity> listResponse = rechargeAccountRepository.findByUserCodeOrderByCreatedDateDesc(accountCode, userCode);
+        listResponse = listResponse.stream().map(rechargeAccountEntity -> {
+            rechargeAccountEntity.setAccountNumber(rechargeAccountEntity.getAccountEntity().getAccountNumber());
+            return rechargeAccountEntity;
+        }).toList();
+        return listResponse;
     }
 
     public ApiResponse<RechargeAccountEntity> add(RechargeAccountEntity obj) {
 
         obj.setAccountCode(obj.getAccountCode());
         obj.setAmount(obj.getAmount());
-        obj.setUserEntity(obj.getUserEntity());
         obj.setCreatedDate(LocalDateTime.now(ZoneId.of(Constants.TIME_ZONE_DEFAULT)));
 
         AccountEntity accountEntity = accountService.getAccountByCode(obj.getAccountCode()).getData();
         accountEntity.setBalance(accountEntity.getBalance() + obj.getAmount());
 
         RechargeAccountEntity rechargeAccountEntity = rechargeAccountRepository.save(obj);
-        rechargeAccountEntity.setAccountEntity(accountService.update(accountEntity).getData());
-        return buildResponse(true, Constants.SUCCESS, Constants.USER_CREATED, rechargeAccountEntity);
+        rechargeAccountEntity.setAccountNumber(accountEntity.getAccountNumber());
+        return buildResponse(true, Constants.SUCCESS, Constants.RECHARGE_ACCOUNT_CREATED, rechargeAccountEntity);
     }
 
     private ApiResponse<RechargeAccountEntity> buildResponse(boolean status, String code, String message, RechargeAccountEntity entity) {

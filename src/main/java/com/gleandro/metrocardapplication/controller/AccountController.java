@@ -17,8 +17,8 @@ public class AccountController {
     private AccountService accountService;
 
     @GetMapping
-    public List<AccountEntity> getAccounts() {
-        return accountService.getAccounts();
+    public List<AccountEntity> getAccounts(@RequestParam String userCode) {
+        return accountService.getAccounts(userCode);
     }
 
     @PostMapping("{userCode}")
