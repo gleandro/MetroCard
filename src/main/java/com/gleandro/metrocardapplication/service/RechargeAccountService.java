@@ -36,7 +36,7 @@ public class RechargeAccountService {
         obj.setAmount(obj.getAmount());
         obj.setCreatedDate(LocalDateTime.now(ZoneId.of(Constants.TIME_ZONE_DEFAULT)));
 
-        AccountEntity accountEntity = accountService.getAccountByCode(obj.getAccountCode()).getData();
+        AccountEntity accountEntity = accountService.getAccountByCodeOrNumber(obj.getAccountCode()).getData();
         accountEntity.setBalance(accountEntity.getBalance() + obj.getAmount());
 
         RechargeAccountEntity rechargeAccountEntity = rechargeAccountRepository.save(obj);

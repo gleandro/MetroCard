@@ -1,5 +1,6 @@
 package com.gleandro.metrocardapplication.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gleandro.metrocardapplication.util.Constants;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -30,7 +31,16 @@ public class TransferEntity implements Serializable {
     @Column(length = 250)
     private String comment;
 
+    private String accountNumberFrom;
+    private String accountNumberTo;
+
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_code", referencedColumnName = "user_code", insertable = false, updatable = false)
-    private AccountEntity accountEntity;
+    @JoinColumn(name = "account_code_from", referencedColumnName = "account_code", insertable = false, updatable = false)
+    private AccountEntity accountEntityFrom;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_code_to", referencedColumnName = "account_code", insertable = false, updatable = false)
+    private AccountEntity accountEntityTo;
 }

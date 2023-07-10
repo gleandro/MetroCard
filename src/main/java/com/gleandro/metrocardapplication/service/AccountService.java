@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountService {
@@ -20,8 +21,14 @@ public class AccountService {
         return accountRepository.findByUserCode(userCode);
     }
 
-    public ApiResponse<AccountEntity> getAccountByCode(String accountCode) {
-        return buildResponse(true, Constants.SUCCESS, "", accountRepository.getByAccountCode(accountCode).get());
+
+    public ApiResponse<AccountEntity> getAccountByCodeOrNumber(String filter) {
+        Optional<AccountEntity> accountEntity = accountRepository.getByAccountCode(filter.replace(" ", ""));
+        if (accountEntity.isEmpty()) {
+            return buildResponse(false, Constants.ERROR, Constants.ACCOUNT_NOT_FOUND, null);
+        }
+
+        return buildResponse(true, Constants.SUCCESS, "", accountEntity.get());
     }
 
     public ApiResponse<AccountEntity> add(String userCode) {

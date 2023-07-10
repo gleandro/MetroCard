@@ -23,9 +23,11 @@ public class Constants {
 
     public static final String ACCOUNT_CREATED = "Cuenta creada con exito";
     public static final String ACCOUNT_UPDATE = "Cuenta actualizada con exito";
+    public static final String ACCOUNT_NOT_FOUND = "Cuenta no encontrada";
 
     public static final String RECHARGE_ACCOUNT_CREATED = "Recarga realizada con exito";
     public static final String TRANSFER_CREATED = "Transferencia realizada con exito";
+    public static final String TRANSFER_ERROR = "No se pudo realizar la transferencia";
 
     public static final String TIME_ZONE_DEFAULT = "America/Lima";
 
