@@ -30,6 +30,8 @@ public class TransferEntity implements Serializable {
     private String accountCodeTo;
     @Column(length = 250)
     private String comment;
+    @Column(length = 50, name = "type_transaction")
+    private String typeTransaction;
 
     private String accountNumberFrom;
     private String accountNumberTo;

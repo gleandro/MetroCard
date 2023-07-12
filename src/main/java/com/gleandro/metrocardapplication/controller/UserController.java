@@ -1,7 +1,7 @@
 package com.gleandro.metrocardapplication.controller;
 
 import com.gleandro.metrocardapplication.entity.UserEntity;
-import com.gleandro.metrocardapplication.service.UserService;
+import com.gleandro.metrocardapplication.service.impl.UserService;
 import com.gleandro.metrocardapplication.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

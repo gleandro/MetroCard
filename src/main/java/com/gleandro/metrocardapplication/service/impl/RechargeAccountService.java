@@ -1,8 +1,10 @@
-package com.gleandro.metrocardapplication.service;
+package com.gleandro.metrocardapplication.service.impl;
 
 import com.gleandro.metrocardapplication.entity.AccountEntity;
 import com.gleandro.metrocardapplication.entity.RechargeAccountEntity;
 import com.gleandro.metrocardapplication.repository.RechargeAccountRepository;
+import com.gleandro.metrocardapplication.service.IAccountService;
+import com.gleandro.metrocardapplication.service.IRechargeAccountService;
 import com.gleandro.metrocardapplication.util.ApiResponse;
 import com.gleandro.metrocardapplication.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,13 @@ import java.time.ZoneId;
 import java.util.List;
 
 @Service
-public class RechargeAccountService {
+public class RechargeAccountService implements IRechargeAccountService {
 
     @Autowired
     private RechargeAccountRepository rechargeAccountRepository;
 
     @Autowired
-    private AccountService accountService;
+    private IAccountService accountService;
 
     public List<RechargeAccountEntity> getRechargeAccounts(String accountCode, String userCode) {
         List<RechargeAccountEntity> listResponse = rechargeAccountRepository.findByUserCodeOrderByCreatedDateDesc(accountCode, userCode);

@@ -1,7 +1,7 @@
 package com.gleandro.metrocardapplication.controller;
 
 import com.gleandro.metrocardapplication.entity.TransferEntity;
-import com.gleandro.metrocardapplication.service.TransferService;
+import com.gleandro.metrocardapplication.service.impl.TransferService;
 import com.gleandro.metrocardapplication.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

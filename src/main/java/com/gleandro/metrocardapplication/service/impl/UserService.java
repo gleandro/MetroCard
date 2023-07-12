@@ -1,4 +1,4 @@
-package com.gleandro.metrocardapplication.service;
+package com.gleandro.metrocardapplication.service.impl;
 
 import com.gleandro.metrocardapplication.entity.UserEntity;
 import com.gleandro.metrocardapplication.repository.UserRepository;

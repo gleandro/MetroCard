@@ -1,7 +1,7 @@
 package com.gleandro.metrocardapplication.controller;
 
 import com.gleandro.metrocardapplication.entity.RechargeAccountEntity;
-import com.gleandro.metrocardapplication.service.RechargeAccountService;
+import com.gleandro.metrocardapplication.service.IRechargeAccountService;
 import com.gleandro.metrocardapplication.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.List;
 public class RechargeAccountController {
 
     @Autowired
-    private RechargeAccountService rechargeAccountService;
+    private IRechargeAccountService rechargeAccountService;
 
     @GetMapping()
     public List<RechargeAccountEntity> getRechargeAccounts(@RequestParam(required = false) String accountCode, @RequestParam(required = false) String userCode) {
