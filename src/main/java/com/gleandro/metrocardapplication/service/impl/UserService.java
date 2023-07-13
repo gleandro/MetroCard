@@ -19,9 +19,9 @@ public class UserService {
 
     public ApiResponse<UserEntity> add(UserEntity user) {
         user.setUserCode(Constants.USER_PREFIX + Util.formatCodeNumber(userRepository.count()));
-        Optional<UserEntity> userOptional = userRepository.getByDni(user.getDni());
 
-        if (userOptional.isPresent()) {
+        ApiResponse<UserEntity> userOptional = this.getUserByDNI(user.getDni());
+        if (Boolean.TRUE.equals(userOptional.getSuccess())) {
             return buildResponse(false, Constants.ERROR, Constants.USER_DUPLICATED, null);
         }
 
@@ -33,14 +33,34 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public ApiResponse<UserEntity> getUserByDNI(String dni) {
+        Optional<UserEntity> userOptional = userRepository.getByDni(dni);
+        return userOptional.isEmpty() ? buildResponse(false, Constants.ERROR, Constants.USER_NOT_FOUND, null)
+                : buildResponse(true, Constants.SUCCESS, "", userOptional.get());
+    }
+
     public ApiResponse<UserEntity> getUserByCode(String code) {
         Optional<UserEntity> userOptional = userRepository.getByUserCode(code);
         return userOptional.isEmpty() ? buildResponse(false, Constants.ERROR, Constants.USER_NOT_FOUND, null)
                 : buildResponse(true, Constants.SUCCESS, "", userOptional.get());
     }
 
-    public UserEntity updateUser(UserEntity userEntity) {
-        return userRepository.save(userEntity);
+    public ApiResponse<UserEntity> updateUser(UserEntity userEntity) {
+        ApiResponse<UserEntity> userEntityApiResponse = getUserByCode(userEntity.getUserCode());
+        if (Boolean.FALSE.equals(userEntityApiResponse.getSuccess())) {
+            return buildResponse(false, Constants.ERROR, Constants.USER_NOT_FOUND, null);
+        }
+
+        UserEntity user = userEntityApiResponse.getData();
+        user.setName(userEntity.getName() == null ? user.getName() : userEntity.getName());
+        user.setLastName(userEntity.getLastName() == null ? user.getLastName() : userEntity.getLastName());
+        user.setAddress(userEntity.getAddress() == null ? user.getAddress() : userEntity.getAddress());
+        user.setEmail(userEntity.getEmail() == null ? user.getEmail() : userEntity.getEmail());
+        user.setPassword(userEntity.getPassword() == null ? user.getPassword() : userEntity.getPassword());
+        user.setDateOfBirth(userEntity.getDateOfBirth() == null ? user.getDateOfBirth() : userEntity.getDateOfBirth());
+        userRepository.save(user);
+
+        return buildResponse(true, Constants.SUCCESS, Constants.USER_UPDATE, userEntity);
     }
 
     public void deleteUser(Long id) {
@@ -50,12 +70,12 @@ public class UserService {
     public ApiResponse<UserEntity> login(UserEntity user) {
         UserEntity userEntity;
         try {
-            Optional<UserEntity> userOptional = userRepository.getByDni(user.getDni());
-            if (userOptional.isEmpty()) {
+            ApiResponse<UserEntity> userOptional = this.getUserByDNI(user.getDni());
+            if (Boolean.FALSE.equals(userOptional.getSuccess())) {
                 return buildResponse(false, Constants.ERROR, Constants.USER_NOT_FOUND, null);
             }
 
-            userEntity = userOptional.get();
+            userEntity = userOptional.getData();
             if (!userEntity.getPassword().equals(user.getPassword())) {
                 return buildResponse(false, Constants.ERROR, Constants.USER_PASSWORD_INCORRECT, null);
             }

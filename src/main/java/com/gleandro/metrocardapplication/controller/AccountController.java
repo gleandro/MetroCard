@@ -32,5 +32,4 @@ public class AccountController {
         return accountService.add(userCode);
     }
 
-
 }

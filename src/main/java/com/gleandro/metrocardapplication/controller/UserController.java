@@ -1,13 +1,16 @@
 package com.gleandro.metrocardapplication.controller;
 
 import com.gleandro.metrocardapplication.entity.UserEntity;
+import com.gleandro.metrocardapplication.service.impl.EmailService;
 import com.gleandro.metrocardapplication.service.impl.UserService;
 import com.gleandro.metrocardapplication.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -16,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping
     public ResponseEntity<List<UserEntity>> getAllUsers() {
@@ -33,7 +39,7 @@ public class UserController {
     }
 
     @PutMapping()
-    public UserEntity updateUser(@RequestBody UserEntity userEntity) {
+    public ApiResponse<UserEntity> updateUser(@RequestBody UserEntity userEntity) {
         return userService.updateUser(userEntity);
     }
 
@@ -45,6 +51,13 @@ public class UserController {
     @PostMapping("/login")
     public ApiResponse<UserEntity> login(@RequestBody UserEntity userEntity) {
         return userService.login(userEntity);
+    }
+
+    @GetMapping("/reset-password")
+    public Map<String, String> enviarCorreo(@RequestParam String dni) {
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", emailService.enviarCorreo(dni));
+        return response;
     }
 
 }
