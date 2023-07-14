@@ -12,8 +12,9 @@ import java.util.List;
 public interface TransferRepository extends JpaRepository<TransferEntity, Long> {
 
     @Query("SELECT t FROM TransferEntity t " +
-            "WHERE t.accountCodeFrom = :filter OR :filter is null " +
-            "OR t.accountCodeTo = :filter OR :filter is null " +
+            "WHERE t.accountCodeFrom = :filter " +
+            "OR t.accountCodeTo = :filter " +
+            "OR t.userCode = :filter " +
             "ORDER BY t.createdDate DESC")
     List<TransferEntity> getTransferByFilter(@Param("filter") String filter);
 

@@ -8,7 +8,6 @@ import com.gleandro.metrocardapplication.util.ApiResponse;
 import com.gleandro.metrocardapplication.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -37,7 +36,6 @@ public class TransferService {
         return listResponse;
     }
 
-    @Transactional
     public ApiResponse<TransferEntity> add(TransferEntity obj) {
         obj.setCreatedDate(LocalDateTime.now(ZoneId.of(Constants.TIME_ZONE_DEFAULT)));
 
@@ -73,8 +71,8 @@ public class TransferService {
         obj.setAccountCodeFrom(accountFromEntity.getAccountCode());
 
         TransferEntity transferEntity = transferRepository.save(obj);
-        obj.setAccountNumberFrom(accountFromEntity.getAccountNumber());
-        obj.setAccountNumberTo(accountToEntity.getAccountNumber());
+        transferEntity.setAccountNumberFrom(accountFromEntity.getAccountNumber());
+        transferEntity.setAccountNumberTo(accountToEntity.getAccountNumber());
         return buildResponse(true, Constants.SUCCESS, Constants.TRANSFER_CREATED, transferEntity);
     }
 

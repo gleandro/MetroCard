@@ -47,7 +47,7 @@ public class AccountService implements IAccountService {
     }
 
     public List<TransferEntity> getRechargeAccounts(String accountCode, String userCode) {
-        List<RechargeAccountEntity> listResponse = rechargeAccountRepository.findByUserCodeOrderByCreatedDateDesc(accountCode, userCode);
+        List<RechargeAccountEntity> listResponse = rechargeAccountRepository.findByCodeAccount(accountCode);
         return listResponse.stream().map(rechargeAccountEntity -> {
             TransferEntity transferEntity = new TransferEntity();
             transferEntity.setUserCode(rechargeAccountEntity.getUserCode());
@@ -84,7 +84,6 @@ public class AccountService implements IAccountService {
         if (accountEntity.isEmpty()) {
             return buildResponse(false, Constants.ERROR, Constants.ACCOUNT_NOT_FOUND, null);
         }
-
         return buildResponse(true, Constants.SUCCESS, "", accountEntity.get());
     }
 

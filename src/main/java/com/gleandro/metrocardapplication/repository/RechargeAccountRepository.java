@@ -19,4 +19,10 @@ public interface RechargeAccountRepository extends JpaRepository<RechargeAccount
             @Param("accountCode") String accountCode,
             @Param("userCode") String userCode);
 
+    @Query(value = "SELECT r FROM RechargeAccountEntity r " +
+            "WHERE r.accountCode = :accountCode OR :accountCode is null " +
+            "ORDER BY r.createdDate DESC")
+    List<RechargeAccountEntity> findByCodeAccount(
+            @Param("accountCode") String accountCode);
+
 }
